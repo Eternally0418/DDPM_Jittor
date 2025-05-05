@@ -76,10 +76,12 @@ DDPM-main2/                            |   Pytorch-DDPM-main/
 
 ## 模型结构图
 
-下图展示了本项目中实现的 UNet 架构具体结构：
+下图展示了本项目中实现的 UNet 架构具体结构（点击可查看原图）：
 
 <div align="center">
-  <img src="Pytorch-DDPM-main/DiffusionModels/logs/UNet.png" width="2750"/>
+  <a href="Pytorch-DDPM-main/DiffusionModels/logs/UNet.png" target="_blank">
+    <img src="Pytorch-DDPM-main/DiffusionModels/logs/UNet.png" width="800" alt="UNet Structure"/>
+  </a>
 </div>
 
 
@@ -261,9 +263,9 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 ---
 
-## 七、对齐验证##
+## 七、对齐验证
 
-### 训练与采样耗时对比分析###
+### 训练与采样耗时对比分析
 
 我们统计了 PyTorch 与 Jittor 框架在相同模型配置下**训练** 40 个 epoch 的总耗时差异，并绘制如下图表：
 
@@ -287,7 +289,7 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 尽管两个框架底层实现差异明显，但在本项目中二者采样效率相当，Jittor 稍快约 4 分钟，表明其在采样环节拥有良好表现。
 
-### Loss 分阶段对比分析##
+### Loss 分阶段对比分析
 
 为更细致地观察 PyTorch 与 Jittor 在训练过程中的表现，我们将完整的 Loss 曲线划分为 **前段 / 中段 / 后段**，并分别取各阶段代表性的 **200 步**进行可视化对比。
 
@@ -306,7 +308,7 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 - [train_log_jittor.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_jittor.txt)  
 - [train_log_pytorch.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_pytorch.txt)
 
-### 评估指标结果汇总###
+### 评估指标结果汇总
 
 | 框架    | FID 分数 | Inception Score (IS) |
 | ------- | -------- | -------------------- |
@@ -341,11 +343,12 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
   <img src="Pytorch-DDPM-main/DiffusionModels/samples/step_t0900.png" width="120"/>
   <img src="Pytorch-DDPM-main/DiffusionModels/samples/step_t0999.png" width="120"/>
 </div>
-## CIFAR10 样本
 
+## CIFAR10 样本 
 <div align="center">
   <img src="Pytorch-DDPM-main/DiffusionModels/samples2/sample_grid.png" width="480"/>
 </div>
+
 ### CIFAR10 渐进式采样展示
 
 <div align="center">
