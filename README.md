@@ -63,19 +63,24 @@ DDPM-main2/                            |   Pytorch-DDPM-main/
     ├── fid/                           |       ├── fid/					# 存储采样图像用于FID评估
     ├── logs/                          |       ├── logs/				# 保存loss曲线与性能日志
     ├── samples/                       |       ├── samples/				# 采样结果及 sample_grid.png
-    ├── ddpm_mnist.ckpt                |       ├── ddpm_mnist.pth		# MNIST训练模型
-    ├── ddpm_my_dataset.ckpt           |       ├── ddpm_my_dataset.ckpt	# 自定义数据集模型
     ├── model.py                       |       ├── model.py				# UNet模型定义
     ├── prepare_data.py                |       ├── prepare_data.py		# 数据集处理脚本
     ├── sample.py                      |       ├── sample.py			# 批量采样脚本（支持设置seed与批处理）
     ├── train.py                       |       ├── train.py				# 训练脚本（保存训练日志与loss曲线）
-                                       |       ├── calc_fid.py			# FID 评估脚本（版本一）
-                                       |       ├── calc_is.py			# IS 评估脚本（版本一）
-                                       |       ├── fid_score.txt		# FID 评估结果输出
-                                       |       ├── is_score.txt			# IS 评估结果输出
+                                       |       ├── calc_fid.py			# FID 评估脚本
+                                       |       ├── calc_is.py			# IS 评估脚本
+
 ```
 
 ---
+
+## 模型结构图
+
+下图展示了本项目中实现的 UNet 架构具体结构：
+
+<div align="center">
+  <img src="Pytorch-DDPM-main/DiffusionModels/logs/UNet.png" width="2750"/>
+</div>
 
 
 ## 四、数据准备
@@ -141,7 +146,7 @@ python prepare_data.py --dataset data/my_dataset --out data/my_dataset_processed
 
 ### Jittor 训练
 
-`train_jittor.py` 脚本用于在 Jittor 框架下训练 DDPM 模型，支持自定义数据集和参数设定。该脚本支持完整日志记录、保存每轮模型权重及绘制 loss 曲线图像。
+`train_jittor.py` 脚本用于在 Jittor 框架下训练 DDPM 模型，支持自定义数据集和参数设定。该脚本支持完整日志记录（用时和loss）、保存每轮模型权重及绘制 loss 曲线图像。
 
 ```bash
 python train_jittor.py --dataset mnist --epochs 40 --batch_size 128 --lr 1e-4 --T 1000
@@ -166,7 +171,7 @@ python train_jittor.py --dataset mnist --epochs 40 --batch_size 128 --lr 1e-4 --
 
 ### Jittor 采样
 
-`sample_jittor.py` 脚本用于从训练好的 DDPM 模型中采样生成图像，支持批量采样、step 可视化保存、FID 评估图像导出和网格图生成。
+`sample_jittor.py` 脚本用于从训练好的 DDPM 模型中采样生成图像，支持批量采样、step 可视化保存、FID 所需的评估图像导出和网格图生成。
 
 ```bash
 python sample_jittor.py --ckpt checkpoints/ddpm_mnist_epoch40.ckpt --num_samples 10000
@@ -186,7 +191,7 @@ python sample_jittor.py --ckpt checkpoints/ddpm_mnist_epoch40.ckpt --num_samples
 - 分批保存的图像样本（fid/sample_*.png）
 - 采样 step 可视化图（samples/step_tXXXX.png）
 - 图像网格图（samples/sample_grid.png）
-- 性能记录日志（logs/performance_log2.txt）
+- 性能记录日志（logs/performance_log.txt）
 
 ---
 
@@ -218,7 +223,7 @@ python calc_fid.py --real data/mnist_processed.npz --fake fid --out fid_score.tx
 文件内容（fid_score.txt）：
 
 ```
-FID score: 12.3456
+FID score: 12.3456 ± 0.3421
 ```
 
 FID 越低，表示生成图像与真实图像分布越接近。
@@ -298,8 +303,8 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 **详细数据如下：**
 
-- [performance_log_jittor.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_jittor.txt)  
-- [performance_log_pytorch.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_pytorch.txt)
+- [train_log_jittor.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_jittor.txt)  
+- [train_log_pytorch.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_pytorch.txt)
 
 ### 评估指标结果汇总
 
