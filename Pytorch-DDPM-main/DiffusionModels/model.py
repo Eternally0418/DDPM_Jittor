@@ -109,9 +109,17 @@ class UNet(nn.Module):
         in_ch = base_channels
         for i, mult in enumerate(channel_mults):
             out_ch = base_channels * mult
-            for _ in range(num_res_blocks):
-                self.down.append(ResAttnBlock(in_ch, out_ch, time_dim, use_attn=(i in attn_resolutions), dropout=dropout))
+            if i == 2:
+                for _ in range(num_res_blocks-1):
+                    self.down.append(ResAttnBlock(in_ch, out_ch, time_dim, use_attn=False, dropout=dropout))
+                    in_ch = out_ch
+                self.down.append(ResAttnBlock(in_ch, out_ch, time_dim, use_attn=True, dropout=dropout))
                 in_ch = out_ch
+            else:
+                for _ in range(num_res_blocks):
+                    self.down.append(ResAttnBlock(in_ch, out_ch, time_dim, use_attn=False, dropout=dropout))
+                    in_ch = out_ch
+
             if i < len(channel_mults) - 1:
                 self.down.append(Downsample(in_ch))
 
@@ -125,7 +133,7 @@ class UNet(nn.Module):
         for i, mult in reversed(list(enumerate(channel_mults))):
             out_ch = base_channels * mult
             for _ in range(num_res_blocks):
-                self.up.append(ResAttnBlock(in_ch + out_ch, out_ch, time_dim, use_attn=(i in attn_resolutions), dropout=dropout))
+                self.up.append(ResAttnBlock(in_ch + out_ch, out_ch, time_dim, use_attn=False, dropout=dropout))
                 in_ch = out_ch
             if i > 0:
                 self.up.append(Upsample(in_ch))
