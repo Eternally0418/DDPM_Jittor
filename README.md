@@ -67,6 +67,7 @@ DDPM-main2/                            |   Pytorch-DDPM-main/
     ├── prepare_data.py                |       ├── prepare_data.py		    # 数据集处理脚本
     ├── sample.py                      |       ├── sample.py			    # 批量采样脚本（支持设置seed与批处理）
     ├── train.py                       |       ├── train.py			    # 训练脚本（保存训练日志与loss曲线）
+    ├── train2.py                      |       ├── train2.py			    # 训练脚本（更新版，增加了验证集loss）
                                        |       ├── calc_fid.py			    # FID 评估脚本
                                        |       ├── calc_is.py			    # IS 评估脚本
 
@@ -268,7 +269,7 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 ### 训练与采样耗时对比分析
 
-我们统计了 PyTorch 与 Jittor 框架在相同模型配置下**训练** 40 个 epoch 的总耗时差异，并绘制如下图表：
+我统计了 PyTorch 与 Jittor 框架在相同模型配置下**训练** 40 个 epoch 的总耗时差异，并绘制如下图表：
 
 ![epoch_time_compare](Pytorch-DDPM-main/DiffusionModels/logs/epoch_time.png)
 
@@ -292,7 +293,7 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 ### Loss 分阶段对比分析
 
-为更细致地观察 PyTorch 与 Jittor 在训练过程中的表现，我们将完整的 Loss 曲线划分为 **前段 / 中段 / 后段**，并分别取各阶段代表性的 **200 步**进行可视化对比。
+为更细致地观察 PyTorch 与 Jittor 在训练过程中的表现，我将完整的 Loss 曲线划分为 **前段 / 中段 / 后段**，并分别取各阶段代表性的 **200 步**进行可视化对比。
 
 | 训练阶段 | Loss 对比图（PyTorch：蓝色，Jittor：橙色）       |
 | -------- | ------------------------------------------------ |
@@ -315,7 +316,7 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 以下为 PyTorch 与 Jittor 在每轮验证中的 Loss 表现：
 
-![validation_loss_compare](Pytorch-DDPM-main/DiffusionModels/logs/Validation Loss.png)
+![validation_loss_compare](Pytorch-DDPM-main/DiffusionModels/logs/Validation_Loss.png)
 
 - **整体趋势**：两者的验证损失都在逐步下降，收敛良好；
 - **局部表现**：初期 jittor 收敛更快，但后期 PyTorch 在稳定性和最低值方面略有优势；
