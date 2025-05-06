@@ -34,7 +34,7 @@ def main():
     os.makedirs('samples2', exist_ok=True)
     os.makedirs('fid2', exist_ok=True)
     os.makedirs('logs', exist_ok=True)
-    perf_log = open('logs/performance_log2_jittor.txt', 'a')
+    perf_log = open('../../Pytorch-DDPM-main/DiffusionModels/logs/performance_log2_jittor.txt', 'a')
 
     # DDPM调度表
     betas = np.linspace(1e-4, 0.02, T, dtype=np.float32)

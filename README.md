@@ -58,17 +58,17 @@ Jittor 项目结构                          |   PyTorch 项目结构
 -------------------------------------- | -----------------------------------------------
 DDPM-main2/                            |   Pytorch-DDPM-main/
 └── DiffusionModels/                   |   └── DiffusionModels/
-    ├── checkpoints/                   |       ├── checkpoints/			# 保存模型权重文件
-    ├── data/                          |       ├── data/				# 数据集（预处理后的 .npz）
-    ├── fid/                           |       ├── fid/					# 存储采样图像用于FID评估
-    ├── logs/                          |       ├── logs/				# 保存loss曲线与性能日志
-    ├── samples/                       |       ├── samples/				# 采样结果及 sample_grid.png
-    ├── model.py                       |       ├── model.py				# UNet模型定义
-    ├── prepare_data.py                |       ├── prepare_data.py		# 数据集处理脚本
-    ├── sample.py                      |       ├── sample.py			# 批量采样脚本（支持设置seed与批处理）
-    ├── train.py                       |       ├── train.py				# 训练脚本（保存训练日志与loss曲线）
-                                       |       ├── calc_fid.py			# FID 评估脚本
-                                       |       ├── calc_is.py			# IS 评估脚本
+    ├── checkpoints/                   |       ├── checkpoints/			    # 保存模型权重文件
+    ├── data/                          |       ├── data/		            # 数据集（预处理后的 .npz）
+    ├── fid/                           |       ├── fid/				    # 存储采样图像用于FID评估
+    ├── logs/                          |       ├── logs/			    # 保存loss曲线与性能日志
+    ├── samples/                       |       ├── samples/			    # 采样结果及 sample_grid.png
+    ├── model.py                       |       ├── model.py			    # UNet模型定义
+    ├── prepare_data.py                |       ├── prepare_data.py		    # 数据集处理脚本
+    ├── sample.py                      |       ├── sample.py			    # 批量采样脚本（支持设置seed与批处理）
+    ├── train.py                       |       ├── train.py			    # 训练脚本（保存训练日志与loss曲线）
+                                       |       ├── calc_fid.py			    # FID 评估脚本
+                                       |       ├── calc_is.py			    # IS 评估脚本
 
 ```
 
@@ -84,6 +84,7 @@ DDPM-main2/                            |   Pytorch-DDPM-main/
   </a>
 </div>
 
+**注：每一个Residual都有时间嵌入，图中未画出**
 
 ## 四、数据准备
 
@@ -307,6 +308,24 @@ Inception Score 越高，表示生成图像更加清晰且多样性较好。
 
 - [train_log_jittor.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_jittor.txt)  
 - [train_log_pytorch.txt](Pytorch-DDPM-main/DiffusionModels/logs/train_log_pytorch.txt)
+
+---
+
+### Validation Loss 对比（Epoch 1~39）
+
+以下为 PyTorch 与 Jittor 在每轮验证中的 Loss 表现：
+
+![validation_loss_compare](Pytorch-DDPM-main/DiffusionModels/logs/Validation Loss.png)
+
+- **整体趋势**：两者的验证损失都在逐步下降，收敛良好；
+- **局部表现**：初期 jittor 收敛更快，但后期 PyTorch 在稳定性和最低值方面略有优势；
+- **最终表现**：两者最终差距非常小，均达到了较低的 Validation Loss。
+
+
+**详细数据如下：**
+
+- [performance_log2_jittor.txt](Pytorch-DDPM-main/DiffusionModels/logs/performance_log2_jittor.txt)  
+- [performance_log2_pytorch.txt](Pytorch-DDPM-main/DiffusionModels/logs/performance_log2_pytorch.txt)
 
 ### 评估指标结果汇总
 

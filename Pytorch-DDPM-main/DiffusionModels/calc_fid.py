@@ -8,24 +8,24 @@ from torchvision import transforms
 from torchmetrics.image.fid import FrechetInceptionDistance
 from tqdm import tqdm
 
-def load_real_images(npz_path):
+def load_real_images(npz_path): #还原图像像素值为 [0, 1] 范围
     data = np.load(npz_path)
     images = torch.tensor(data["images"], dtype=torch.float32)  # (N, 1, 28, 28)
     images = (images + 1.0) / 2.0  # [-1,1] → [0,1]
     return images
 
-def load_fake_image_paths(folder):
+def load_fake_image_paths(folder):      #加载所有要评估的图像
     return sorted([
         os.path.join(folder, f) for f in os.listdir(folder)
         if f.lower().endswith(".png")
     ])
 
-def preprocess_real_batch(batch, device):
+def preprocess_real_batch(batch, device):       #扩展通道 + 放大 + 转整数
     batch = batch.repeat(1, 3, 1, 1)  # [B, 1, 28, 28] → [B, 3, 28, 28]
     batch = F.interpolate(batch, size=(299, 299), mode='bilinear', align_corners=False)
     return (batch * 255).round().to(torch.uint8).to(device)
 
-def preprocess_fake_batch(paths, device):
+def preprocess_fake_batch(paths, device):       #同上，将要评估的图像转为合适大小
     imgs = []
     for p in paths:
         img = Image.open(p).convert("RGB").resize((299, 299), Image.BILINEAR)

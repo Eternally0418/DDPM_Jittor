@@ -9,7 +9,7 @@ import torch.nn.functional as F
 from torchvision import transforms, models
 from torch.utils.data import DataLoader, Dataset
 
-class ImageFolderDataset(Dataset):
+class ImageFolderDataset(Dataset):      #处理要评估的图像转为合适大小
     def __init__(self, folder, image_size=299):
         self.paths = sorted([
             os.path.join(folder, fname)
@@ -37,18 +37,18 @@ def calculate_inception_score(images, splits=10):
 
     for i in range(splits):
         part = preds[i * N // splits: (i + 1) * N // splits]
-        py = part.mean(0)
-        kl = part * (torch.log(part + 1e-6) - torch.log(py + 1e-6))
-        kl = kl.sum(1)
-        scores.append(kl.mean().item())
+        py = part.mean(0)   #平均分布
+        kl = part * (torch.log(part + 1e-6) - torch.log(py + 1e-6))     #kl散度
+        kl = kl.sum(1)      #对类别求和
+        scores.append(kl.mean().item())     #平均每张图的KL
 
     mean_score = np.exp(np.mean(scores))
     std_score = np.exp(np.std(scores))
     return mean_score, std_score
 
 @torch.no_grad()
-def get_inception_preds(dataloader, device):
-    model = models.inception_v3(pretrained=True, transform_input=False).to(device)
+def get_inception_preds(dataloader, device):        #提取用于 Inception Score 的预测分布（p(y|x)）
+    model = models.inception_v3(pretrained=True, transform_input=False).to(device)  #用的是 ImageNet 的 InceptionV3
     model.eval()
 
     preds = []
@@ -70,7 +70,7 @@ def main():
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     dataset = ImageFolderDataset(args.folder)
-    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=2)
+    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=2)      #迭代器
 
     print(f"[INFO] 图像数量: {len(dataset)}, 使用设备: {device}")
     preds = get_inception_preds(dataloader, device)

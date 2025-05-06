@@ -1,40 +1,78 @@
-Epoch 1 Time: 144.15 sec
-Epoch 2 Time: 124.89 sec
-Epoch 3 Time: 123.93 sec
-Epoch 4 Time: 123.73 sec
-Epoch 5 Time: 124.18 sec
-Epoch 6 Time: 123.80 sec
-Epoch 7 Time: 128.44 sec
-Epoch 8 Time: 121.36 sec
-Epoch 9 Time: 118.13 sec
-Epoch 10 Time: 117.64 sec
-Epoch 11 Time: 116.64 sec
-Epoch 12 Time: 125.82 sec
-Epoch 13 Time: 179.85 sec
-Epoch 14 Time: 179.23 sec
-Epoch 15 Time: 177.61 sec
-Epoch 16 Time: 176.77 sec
-Epoch 17 Time: 176.71 sec
-Epoch 18 Time: 179.27 sec
-Epoch 19 Time: 148.59 sec
-Epoch 20 Time: 73.76 sec
-Epoch 21 Time: 72.87 sec
-Epoch 22 Time: 73.61 sec
-Epoch 23 Time: 72.50 sec
-Epoch 24 Time: 72.13 sec
-Epoch 25 Time: 73.04 sec
-Epoch 26 Time: 73.50 sec
-Epoch 27 Time: 74.30 sec
-Epoch 28 Time: 73.14 sec
-Epoch 29 Time: 76.39 sec
-Epoch 30 Time: 74.04 sec
-Epoch 31 Time: 72.90 sec
-Epoch 32 Time: 74.18 sec
-Epoch 33 Time: 73.44 sec
-Epoch 34 Time: 72.84 sec
-Epoch 35 Time: 73.12 sec
-Epoch 36 Time: 73.12 sec
-Epoch 37 Time: 73.04 sec
-Epoch 38 Time: 73.59 sec
-Epoch 39 Time: 73.96 sec
-Epoch 40 Time: 73.15 sec
+Epoch 1 Time: 77.44 sec
+Validation Loss: 0.050191
+Epoch 2 Time: 77.21 sec
+Validation Loss: 0.038683
+Epoch 3 Time: 80.18 sec
+Validation Loss: 0.035838
+Epoch 4 Time: 80.88 sec
+Validation Loss: 0.031792
+Epoch 5 Time: 83.57 sec
+Validation Loss: 0.030411
+Epoch 6 Time: 72.28 sec
+Validation Loss: 0.028304
+Epoch 7 Time: 70.77 sec
+Validation Loss: 0.027697
+Epoch 8 Time: 73.47 sec
+Validation Loss: 0.026911
+Epoch 9 Time: 73.55 sec
+Validation Loss: 0.026296
+Epoch 10 Time: 76.29 sec
+Validation Loss: 0.026469
+Epoch 11 Time: 74.42 sec
+Validation Loss: 0.025745
+Epoch 12 Time: 72.00 sec
+Validation Loss: 0.026394
+Epoch 13 Time: 75.64 sec
+Validation Loss: 0.025470
+Epoch 14 Time: 78.51 sec
+Validation Loss: 0.024547
+Epoch 15 Time: 76.12 sec
+Validation Loss: 0.025149
+Epoch 16 Time: 71.97 sec
+Validation Loss: 0.024131
+Epoch 17 Time: 70.65 sec
+Validation Loss: 0.024928
+Epoch 18 Time: 70.62 sec
+Validation Loss: 0.024542
+Epoch 19 Time: 70.42 sec
+Validation Loss: 0.023948
+Epoch 20 Time: 70.84 sec
+Validation Loss: 0.023733
+Epoch 21 Time: 72.61 sec
+Validation Loss: 0.023539
+Epoch 22 Time: 74.00 sec
+Validation Loss: 0.023899
+Epoch 23 Time: 74.38 sec
+Validation Loss: 0.023352
+Epoch 24 Time: 81.73 sec
+Validation Loss: 0.024134
+Epoch 25 Time: 77.70 sec
+Validation Loss: 0.023557
+Epoch 26 Time: 75.61 sec
+Validation Loss: 0.023675
+Epoch 27 Time: 69.88 sec
+Validation Loss: 0.023298
+Epoch 28 Time: 70.32 sec
+Validation Loss: 0.023896
+Epoch 29 Time: 69.15 sec
+Validation Loss: 0.023776
+Epoch 30 Time: 70.42 sec
+Validation Loss: 0.021721
+Epoch 31 Time: 70.05 sec
+Validation Loss: 0.023571
+Epoch 32 Time: 69.97 sec
+Validation Loss: 0.023181
+Epoch 33 Time: 69.68 sec
+Validation Loss: 0.022874
+Epoch 34 Time: 69.75 sec
+Validation Loss: 0.023008
+Epoch 35 Time: 69.89 sec
+Validation Loss: 0.022681
+Epoch 36 Time: 70.74 sec
+Validation Loss: 0.023102
+Epoch 37 Time: 69.66 sec
+Validation Loss: 0.023462
+Epoch 38 Time: 69.53 sec
+Validation Loss: 0.024159
+Epoch 39 Time: 69.81 sec
+Validation Loss: 0.023064
