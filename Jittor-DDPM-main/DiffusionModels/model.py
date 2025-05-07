@@ -1,7 +1,6 @@
 import jittor as jt
 from jittor import nn, Module
 
-# ------------------------ 基础组件 ------------------------ #
 class Swish(Module):
     def execute(self, x):
         return x * jt.sigmoid(x)
@@ -83,7 +82,6 @@ class AttentionBlock(Module):
         out  = out.permute(0,1,3,2).reshape((B, -1, H, W))      #把 [B, h, N, d] 的结果 reshape 回 [B, C, H, W]
         return x + self.proj(out)       #进行残差链接，proj是将拆开的头再融合一起“各自学到的知识”融合成一个更强的全局表征
 
-# ---------------------------- UNet ---------------------------- #
 class UNet(Module):
     def __init__(self, image_channels=1, base_channels=32,
                  channel_mults=(1,2,4), num_res_blocks=2):
@@ -96,7 +94,6 @@ class UNet(Module):
         self.time_embed = TimeEmbedding(time_dim)       #将整数时间步 t（0~999）编码为一个 time_dim 的向量
         self.in_conv    = nn.Conv2d(image_channels, base_channels, 3, padding=1)        #把图像从 [1, 28, 28] 映射为 [32, 28, 28] 特征（1变成32通道）
 
-        # ---------------- Encoder ---------------- #
         self.down_blocks   = nn.ModuleList()
         self.downsamples   = nn.ModuleList()
         in_ch = base_channels
@@ -118,12 +115,10 @@ class UNet(Module):
                     nn.Conv2d(in_ch, in_ch, 3, stride=2, padding=1)     #图像H，W减半
                 )
 
-        # ---------------- Bottleneck ---------------- #
         self.mid_block1 = ResidualBlock(in_ch, in_ch, time_dim)
         self.mid_attn   = AttentionBlock(in_ch)
         self.mid_block2 = ResidualBlock(in_ch, in_ch, time_dim)     #mid_block1 和 mid_block2 是 ResBlock，Attention 是中间插入的
 
-        # ---------------- Decoder ---------------- #
         self.up_blocks  = nn.ModuleList()   # 每个元素=ModuleList(若干ResBlock)
         self.upsamples  = nn.ModuleList()
         for i, mult in enumerate(reversed(channel_mults)):
@@ -146,12 +141,10 @@ class UNet(Module):
         self.out_act  = Swish()
         self.out_conv = nn.Conv2d(in_ch, image_channels, 3, padding=1)              #将通道数从中间的通道（如32）还原回原始的 image_channels（如1）
 
-    # ------------------------ Forward ------------------------ #
     def execute(self, x, t):
         t_emb = self.time_embed(t)
         x = self.in_conv(x)         #输入图像 x 原始形状是 [B, 1, 28, 28]，卷积之后变成[B, 32, 28, 28]
 
-        # -------- Encoder -------- #
         skips = []
         for i, res_level in enumerate(self.down_blocks):
             for block in res_level:
@@ -160,10 +153,8 @@ class UNet(Module):
             if i < len(self.downsamples):
                 x = self.downsamples[i](x)  # 下采样
 
-        # -------- Bottleneck -------- #
         x = self.mid_block2(self.mid_attn(self.mid_block1(x, t_emb)), t_emb)
 
-        # -------- Decoder -------- #
         for i, res_level in enumerate(self.up_blocks):
             skip = skips.pop()
             x = jt.concat([x, skip], dim=1)     #这就是为什么刚才第一个要进行跳跃链接
