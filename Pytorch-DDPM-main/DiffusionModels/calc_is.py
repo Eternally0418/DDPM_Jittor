@@ -72,12 +72,12 @@ def main():
     dataset = ImageFolderDataset(args.folder)
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=2)      #迭代器
 
-    print(f"[INFO] 图像数量: {len(dataset)}, 使用设备: {device}")
+    print(f"图像数量: {len(dataset)}, 使用设备: {device}")
     preds = get_inception_preds(dataloader, device)
     mean, std = calculate_inception_score(preds, splits=args.splits)
 
     result = f"Inception Score: {mean:.4f} ± {std:.4f}"
-    print("[✓] " + result)
+    print(result)
     with open(args.out, 'w') as f:
         f.write(result + "\n")
 
