@@ -102,7 +102,7 @@ def main():
     perf_log.write(f"[Sample] Total: {total_time:.2f}s, Avg per image: {total_time/total:.4f}s\n")
     perf_log.close()
 
-    print(f"[✓] 采样完成，共生成 {total} 张图，保存至 fid/，网格图保存至 samples/sample_grid.png")
+    print(f"采样完成，共生成 {total} 张图，保存至 fid/，网格图保存至 samples/sample_grid.png")
 
 def to_grid(x, C, H, W):
     x_np = ((x + 1) / 2 * 255.0).clamp(0, 255).cpu().numpy().astype(np.uint8)
