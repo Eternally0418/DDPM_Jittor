@@ -30,9 +30,9 @@ def prepare_builtin(dataset_name, save_path):
     if images.ndim == 3:        #判断维度是 3，就手动添加一个通道维度，变为 [N, 1, H, W]
         images = images.reshape((-1, 1, images.shape[1], images.shape[2]))
 
-    print(f"[INFO] 加载 {dataset_name} 成功，图像形状: {images.shape}，标签数量: {labels.shape}")
+    print(f"加载 {dataset_name} 成功，图像形状: {images.shape}，标签数量: {labels.shape}")
     np.savez_compressed(save_path, images=images, labels=labels)
-    print(f"[✓] Built-in {dataset_name} 预处理完成，保存至 {save_path}")
+    print(f"Built-in {dataset_name} 预处理完成，保存至 {save_path}")
 
 def prepare_custom_image_folder(root_dir, save_path, image_size=32):
     images, labels = [], []
@@ -61,20 +61,20 @@ def prepare_custom_image_folder(root_dir, save_path, image_size=32):
                 labels.append(class_map[class_name])
                 total_images += 1
             except Exception as e:
-                print(f"[WARN] 跳过无法读取的图像: {img_path}，错误: {e}")
+                print(f"跳过无法读取的图像: {img_path}，错误: {e}")
 
     if total_images == 0:
-        raise RuntimeError(f"[ERROR] 没有找到任何图像！请检查路径是否正确: {root_dir}")
+        raise RuntimeError(f"没有找到任何图像！请检查路径是否正确: {root_dir}")
 
     images = np.array(images, dtype=np.float32)
     labels = np.array(labels, dtype=np.int32)
 
-    print(f"[INFO] 成功处理图像数量: {total_images}")
-    print(f"[INFO] 图像 shape: {images.shape}，标签 shape: {labels.shape}")
-    print(f"[INFO] 类别映射: {class_map}")
+    print(f"成功处理图像数量: {total_images}")
+    print(f"图像 shape: {images.shape}，标签 shape: {labels.shape}")
+    print(f"类别映射: {class_map}")
 
     np.savez_compressed(save_path, images=images, labels=labels)
-    print(f"[✓] 自定义数据集预处理完成，保存至 {save_path}")
+    print(f"自定义数据集预处理完成，保存至 {save_path}")
 
 if __name__ == "__main__":
     import argparse
