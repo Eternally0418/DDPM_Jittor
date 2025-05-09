@@ -55,7 +55,7 @@ def main():
     start_time = time.time()
     num_batches = (total + max_bs - 1) // max_bs        #将总采样量 total 划分成若干个批次，每个最多 max_bs 个样本
 
-    print(f"[INFO] 开始采样，共 {total} 张图，分为 {num_batches} 批...")
+    print(f"开始采样，共 {total} 张图，分为 {num_batches} 批...")
     with tqdm(total=total, desc="Sampling", ncols=80) as pbar:
         for batch_id in range(num_batches):
             cur_bs = min(max_bs, total - batch_id * max_bs)
@@ -96,7 +96,7 @@ def main():
     perf_log.write(f"[Sample] Total: {total_time:.2f}s, Avg per image: {total_time/total:.4f}s\n")
     perf_log.close()
 
-    print(f"[✓] 采样完成，共生成 {total} 张图，保存至 fid/，网格图保存至 samples/sample_grid.png")
+    print(f"采样完成，共生成 {total} 张图，保存至 fid/，网格图保存至 samples/sample_grid.png")
 
 def to_grid(x, C, H, W):
     x_np = ((x.data + 1) / 2 * 255.0).clip(0, 255).astype(np.uint8)
