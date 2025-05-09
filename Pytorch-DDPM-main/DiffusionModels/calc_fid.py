@@ -42,24 +42,24 @@ def main():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[INFO] 使用设备: {device}")
+    print(f"使用设备: {device}")
 
     fid_metric = FrechetInceptionDistance(feature=2048).to(device)
 
-    print("[1] 分批处理真实图像...")
+    print("分批处理真实图像...")
     real_images = load_real_images(args.real)
     for i in tqdm(range(0, len(real_images), args.batch_size)):
         batch = preprocess_real_batch(real_images[i:i+args.batch_size], device)
         fid_metric.update(batch, real=True)
 
-    print("[2] 分批处理生成图像...")
+    print("分批处理生成图像...")
     fake_paths = load_fake_image_paths(args.fake)
     for i in tqdm(range(0, len(fake_paths), args.batch_size)):
         batch_paths = fake_paths[i:i+args.batch_size]
         batch = preprocess_fake_batch(batch_paths, device)
         fid_metric.update(batch, real=False)
 
-    print("[3] 计算 FID...")
+    print("计算 FID...")
     score = fid_metric.compute().item()
     print(f"[✓] FID Score: {score:.4f}")
     with open(args.out, 'w') as f:
