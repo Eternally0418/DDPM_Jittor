@@ -64,7 +64,7 @@ def prepare_custom_image_folder(root_dir, save_path, image_size=32):
                 print(f"跳过无法读取的图像: {img_path}，错误: {e}")
 
     if total_images == 0:
-        raise RuntimeError(f"没有找到任何图像！请检查路径是否正确: {root_dir}")
+        raise RuntimeError(f"没有找到任何图像，请检查路径是否正确: {root_dir}")
 
     images = np.array(images, dtype=np.float32)
     labels = np.array(labels, dtype=np.int32)
